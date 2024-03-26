@@ -10,7 +10,10 @@ import Foundation
 struct Pokemon: Decodable {
     let name: String?
     let url: String?
-    
-    var _name: String { name ?? "N/A" }
-    var _url: String { url ?? "N/A" }
+}
+
+struct PokemonResponse: Decodable {
+    let next: String?
+    let previous: String?
+    let results: [Pokemon]?
 }
