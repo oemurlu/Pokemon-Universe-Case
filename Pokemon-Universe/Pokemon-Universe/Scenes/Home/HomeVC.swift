@@ -14,13 +14,13 @@ protocol HomeViewControllerInterface: AnyObject {
 }
 
 final class HomeVC: UIViewController {
-
+    
     private var collectionView: UICollectionView!
     let viewModel = HomeVM()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         viewModel.view = self
         viewModel.viewDidLoad()
     }
@@ -37,7 +37,7 @@ extension HomeVC: HomeViewControllerInterface {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: UIHelper.createHomeFlowLayout())
         view.addSubview(collectionView)
         collectionView.backgroundColor = .systemGray6
-        #warning("set bgcolor to .clear")
+#warning("set bgcolor to .clear")
         
         collectionView.register(PokemonCell.self, forCellWithReuseIdentifier: PokemonCell.reuseID)
         collectionView.delegate = self
@@ -63,5 +63,18 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PokemonCell.reuseID, for: indexPath) as! PokemonCell
         cell.set(pokemon: viewModel.combinedPokemonList[indexPath.item])
         return cell
+    }
+}
+
+extension HomeVC: UIScrollViewDelegate {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.size.height
+        
+        if offsetY >= contentHeight - (4 * height) {
+            print("Ekranın sonuna geldik, yeni veriler yükleniyor...")
+            viewModel.fetchPokemons()
+        }
     }
 }

@@ -16,8 +16,13 @@ protocol HomeViewModelInterface {
 final class HomeVM {
     weak var view: HomeViewControllerInterface?
     var pokemonsList = [Pokemon]()
-    
     var combinedPokemonList = [CombinedPokemon]()
+    
+    private var canLoadMorePages = true
+    private var offset = 0 // for paging
+    private var limit = 10 // item count per request
+    private var isLoading = false
+    
 }
 
 extension HomeVM: HomeViewModelInterface {
@@ -28,9 +33,15 @@ extension HomeVM: HomeViewModelInterface {
     }
     
     func fetchPokemons() {
+        // fetch pokemons if exists
+        guard canLoadMorePages, !isLoading else { return } // finish if it's already loading or there are no more pages
+        isLoading = true // fetch islemini baslattik.
+        
         Task {
+            // defer block is executed whether the code is successful or not
+            defer { self.isLoading = false }
             do {
-                let pokemonResponse = try await PokemonService.shared.fetchPokemons(endPoint: .getPokemons(offset: 0, limit: 10))
+                let pokemonResponse = try await PokemonService.shared.fetchPokemons(endPoint: .getPokemons(offset: offset, limit: limit))
                 await handlePokemonResponse(with: pokemonResponse)
             } catch {
                 if let puError = error as? NetworkError {
@@ -43,6 +54,18 @@ extension HomeVM: HomeViewModelInterface {
     }
     
     private func handlePokemonResponse(with pokemonResponse: PokemonResponse) async {
+        // pagination check
+        if pokemonResponse.next != nil {
+            canLoadMorePages = true
+            offset += limit
+        } else {
+            canLoadMorePages = false
+        }
+        
+        guard let _ = pokemonResponse.results else { return }
+        var newCombinedPokemons = [CombinedPokemon]()
+
+        // create combined array with images and names
         let pokemonNames = pokemonResponse.results?.compactMap { $0.name} ?? []
         let dispatchGroup = DispatchGroup()
         for pokemonName in pokemonNames {
@@ -50,7 +73,7 @@ extension HomeVM: HomeViewModelInterface {
             do {
                 let pokemonDetail = try await PokemonService.shared.fetchPokemonDetail(endpoint: .getPokemonByName(name: pokemonName))
                 let combinedPokemon = CombinedPokemon(name: pokemonName, image: pokemonDetail.sprites?.frontDefault)
-                self.combinedPokemonList.append(combinedPokemon)
+                newCombinedPokemons.append(combinedPokemon)
                 dispatchGroup.leave()
             } catch {
                 print("error while fetching pokemonDetail: \(error.localizedDescription)")
@@ -59,6 +82,7 @@ extension HomeVM: HomeViewModelInterface {
         
         dispatchGroup.notify(queue: DispatchQueue.main) {
             self.view?.reloadCollectionViewOnMainThread()
+            self.combinedPokemonList.append(contentsOf: newCombinedPokemons)
         }
     }
 }
