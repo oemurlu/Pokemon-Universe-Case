@@ -28,7 +28,7 @@ extension DetailVM: DetailViewModelInterface {
         view?.configureVC()
         view?.configureAvatarImageView()
         view?.configureTitle(pokemonName: self.name)
-        view?.configureSkillsLabel()
+        view?.configureExpandableView()
         fetchDetails()
     }
     
@@ -44,9 +44,11 @@ extension DetailVM: DetailViewModelInterface {
     }
     
     private func handlePokemon(with pokemon: PokemonDetail) {
-        let skills = pokemon.abilities?.compactMap { $0.ability?.name } ?? ["N/A"]
+        let skills = pokemon.abilities?.compactMap { $0.ability?.name }
         let image = pokemon.sprites?.frontDefault ?? ""
-        view?.updateUI(imageUrl: image, skills: skills)
+        let weight = pokemon.weight
+        let height = pokemon.height
+        view?.updateUI(imageUrl: image, skills: skills, weight: weight, height: height)
     }
 }
 

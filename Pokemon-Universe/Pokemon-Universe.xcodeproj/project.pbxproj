@@ -30,6 +30,7 @@
 		B63A80202BB3669200B23ED6 /* CGFloat+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63A801F2BB3669200B23ED6 /* CGFloat+Ext.swift */; };
 		B63A80242BB57FF100B23ED6 /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63A80232BB57FF100B23ED6 /* DetailVC.swift */; };
 		B63A80262BB5809D00B23ED6 /* DetailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63A80252BB5809D00B23ED6 /* DetailVM.swift */; };
+		B63A80292BB5BC4000B23ED6 /* ExpandableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63A80282BB5BC4000B23ED6 /* ExpandableVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		B63A801F2BB3669200B23ED6 /* CGFloat+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Ext.swift"; sourceTree = "<group>"; };
 		B63A80232BB57FF100B23ED6 /* DetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
 		B63A80252BB5809D00B23ED6 /* DetailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVM.swift; sourceTree = "<group>"; };
+		B63A80282BB5BC4000B23ED6 /* ExpandableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ExpandableVC.swift; path = "../../../../../../../../.Trash/Pokemon-Universe-Case/Pokemon-Universe/Pokemon-Universe/Scenes/Detail/ExpandableVC.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 		B63A7FEB2BB2A13E00B23ED6 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
+				B63A80272BB5BC2300B23ED6 /* ViewControllers */,
 				B63A80182BB2FE7E00B23ED6 /* Labels */,
 				B63A80152BB2F01F00B23ED6 /* ImageViews */,
 				B63A800D2BB2EC3700B23ED6 /* Cells */,
@@ -246,6 +249,14 @@
 			path = Detail;
 			sourceTree = "<group>";
 		};
+		B63A80272BB5BC2300B23ED6 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				B63A80282BB5BC4000B23ED6 /* ExpandableVC.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -328,6 +339,7 @@
 				B63A80112BB2EC8200B23ED6 /* PokemonCell.swift in Sources */,
 				B63A80262BB5809D00B23ED6 /* DetailVM.swift in Sources */,
 				B63A7FF32BB2A2B300B23ED6 /* HomeVC.swift in Sources */,
+				B63A80292BB5BC4000B23ED6 /* ExpandableVC.swift in Sources */,
 				B63A801E2BB3512F00B23ED6 /* CombinedPokemon.swift in Sources */,
 				B63A7FF52BB2A2C100B23ED6 /* FavoritesVC.swift in Sources */,
 				B63A80202BB3669200B23ED6 /* CGFloat+Ext.swift in Sources */,

@@ -10,6 +10,8 @@ import Foundation
 struct PokemonDetail: Decodable {
     let abilities: [AbilityItem]?
     let sprites: PokemonImage?
+    let weight: Int?
+    let height: Int?
 }
 
 struct AbilityItem: Decodable {

@@ -11,14 +11,15 @@ protocol DetailViewControllerInterface: AnyObject {
     func configureVC()
     func configureAvatarImageView()
     func configureTitle(pokemonName: String)
-    func configureSkillsLabel()
-    func updateUI(imageUrl: String, skills: [String])
+    func configureExpandableView()
+    func updateUI(imageUrl: String, skills: [String]?, weight: Int?, height: Int?)
 }
 
 class DetailVC: UIViewController {
-
+    
     var viewModel: DetailVM!
     
+    private var expandableView: UIView!
     private var avatarImageView: PUAvatarImageView!
     private var pokemonNameLabel: PUTitleLabel!
     private var skillsLabel: PUTitleLabel!
@@ -36,7 +37,7 @@ class DetailVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         viewModel.view = self
         viewModel.viewDidLoad()
     }
@@ -74,27 +75,35 @@ extension DetailVC: DetailViewControllerInterface {
         ])
     }
     
-    
-    func configureSkillsLabel() {
-        skillsLabel = PUTitleLabel(fontSize: 20)
-        view.addSubview(skillsLabel)
+    func configureExpandableView() {
+        expandableView = UIView()
+        view.addSubview(expandableView)
+        expandableView.translatesAutoresizingMaskIntoConstraints = false
         
-        skillsLabel.text = "Skills: ..."
+        expandableView.backgroundColor = .systemRed
         
         NSLayoutConstraint.activate([
-            skillsLabel.topAnchor.constraint(equalTo: pokemonNameLabel.bottomAnchor, constant: padding),
-            skillsLabel.leadingAnchor.constraint(equalTo: pokemonNameLabel.leadingAnchor),
-            skillsLabel.trailingAnchor.constraint(equalTo: pokemonNameLabel.trailingAnchor),
-            skillsLabel.heightAnchor.constraint(equalToConstant: 24)
+            expandableView.topAnchor.constraint(equalTo: pokemonNameLabel.bottomAnchor, constant: padding / 2),
+            expandableView.leadingAnchor.constraint(equalTo: pokemonNameLabel.leadingAnchor),
+            expandableView.trailingAnchor.constraint(equalTo: pokemonNameLabel.trailingAnchor),
+            expandableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     
-    func updateUI(imageUrl: String, skills: [String]) {
+    func add(childVC: UIViewController, to containerView: UIView) {
+        DispatchQueue.main.async {
+            self.addChild(childVC)
+            containerView.addSubview(childVC.view)
+            childVC.view.frame = containerView.bounds
+            childVC.didMove(toParent: self)
+        }
+    }
+    
+    func updateUI(imageUrl: String, skills: [String]?, weight: Int?, height: Int?) {
         DispatchQueue.main.async {
             self.avatarImageView.downloadImage(fromURL: imageUrl)
-            
-            let skillsText = skills.joined(separator: ", ")
-            self.skillsLabel.text = "Skills: \(skillsText)"
+            let expandVC = ExpandableVC(skills: skills, weight: weight, height: height)
+            self.add(childVC: expandVC, to: self.expandableView)
         }
     }
 }
