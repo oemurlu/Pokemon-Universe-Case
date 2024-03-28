@@ -11,6 +11,7 @@ protocol HomeViewControllerInterface: AnyObject {
     func configureVC()
     func configureCollectionView()
     func reloadCollectionViewOnMainThread()
+    func navigateToDetail(with name: String)
 }
 
 final class HomeVC: UIViewController {
@@ -51,6 +52,11 @@ extension HomeVC: HomeViewControllerInterface {
             self.collectionView.reloadData()
         }
     }
+    
+    func navigateToDetail(with name: String) {
+        let detailVC = DetailVC(name: name)
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
 }
 
 extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -62,6 +68,10 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PokemonCell.reuseID, for: indexPath) as! PokemonCell
         cell.set(pokemon: viewModel.combinedPokemonList[indexPath.item])
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.pokemonDidSelected(at: indexPath)
     }
 }
 

@@ -34,7 +34,7 @@ final class PokemonCell: UICollectionViewCell {
     func set(pokemon: CombinedPokemon) {
         DispatchQueue.main.async {
             self.avatarImageView.downloadImage(fromURL: pokemon.image ?? "")
-            self.pokemonNameLabel.text = pokemon.name
+            self.pokemonNameLabel.text = pokemon.name?.capitalized
         }
     }
     

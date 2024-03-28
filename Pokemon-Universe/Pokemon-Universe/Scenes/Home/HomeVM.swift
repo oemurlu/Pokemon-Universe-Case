@@ -11,6 +11,7 @@ protocol HomeViewModelInterface {
     var view: HomeViewControllerInterface? { get set }
     func viewDidLoad()
     func fetchPokemons()
+    func pokemonDidSelected(at index: IndexPath)
 }
 
 final class HomeVM {
@@ -84,5 +85,10 @@ extension HomeVM: HomeViewModelInterface {
             self.view?.reloadCollectionViewOnMainThread()
             self.combinedPokemonList.append(contentsOf: newCombinedPokemons)
         }
+    }
+    
+    func pokemonDidSelected(at index: IndexPath) {
+        guard let pokemonName = combinedPokemonList[index.item].name else { return }
+        view?.navigateToDetail(with: pokemonName)
     }
 }
