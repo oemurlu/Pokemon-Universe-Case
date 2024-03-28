@@ -12,7 +12,7 @@ class PUTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        UITabBar.appearance().tintColor = .systemYellow // it effects whole tabbar
+        UITabBar.appearance().tintColor = .systemBlue // it effects whole tabbar
         viewControllers = [createHomeNC(), createFavoritesNC()]
         configureTabBarAppearance()
     }

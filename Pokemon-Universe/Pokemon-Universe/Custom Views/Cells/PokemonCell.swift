@@ -24,6 +24,13 @@ final class PokemonCell: UICollectionViewCell {
     }
     
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        avatarImageView.cancelImageDownload()
+    }
+    
+    
     func set(pokemon: CombinedPokemon) {
         DispatchQueue.main.async {
             self.avatarImageView.downloadImage(fromURL: pokemon.image ?? "")
@@ -38,7 +45,6 @@ final class PokemonCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             avatarImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 3 * padding),
-            avatarImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding),
             avatarImageView.widthAnchor.constraint(equalTo: heightAnchor, multiplier: 4/5),
             avatarImageView.heightAnchor.constraint(equalTo: avatarImageView.widthAnchor),
             avatarImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -48,7 +54,7 @@ final class PokemonCell: UICollectionViewCell {
             pokemonNameLabel.heightAnchor.constraint(equalToConstant: 24)
         ])
         
-        layer.borderColor = UIColor.black.cgColor
+        layer.borderColor = UIColor.secondaryLabel.cgColor
         layer.borderWidth = 2
         layer.cornerRadius = 20
     }

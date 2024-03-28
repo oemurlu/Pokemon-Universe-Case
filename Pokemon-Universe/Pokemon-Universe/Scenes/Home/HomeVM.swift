@@ -20,7 +20,7 @@ final class HomeVM {
     
     private var canLoadMorePages = true
     private var offset = 0 // for paging
-    private var limit = 10 // item count per request
+    private var limit = 15 // item count per request
     private var isLoading = false
     
 }

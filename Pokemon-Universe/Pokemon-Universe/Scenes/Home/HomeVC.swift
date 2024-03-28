@@ -36,8 +36,7 @@ extension HomeVC: HomeViewControllerInterface {
     func configureCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: UIHelper.createHomeFlowLayout())
         view.addSubview(collectionView)
-        collectionView.backgroundColor = .systemGray6
-#warning("set bgcolor to .clear")
+        collectionView.backgroundColor = .clear
         
         collectionView.register(PokemonCell.self, forCellWithReuseIdentifier: PokemonCell.reuseID)
         collectionView.delegate = self
@@ -73,7 +72,6 @@ extension HomeVC: UIScrollViewDelegate {
         let height = scrollView.frame.size.height
         
         if offsetY >= contentHeight - (4 * height) {
-            print("Ekranın sonuna geldik, yeni veriler yükleniyor...")
             viewModel.fetchPokemons()
         }
     }

@@ -28,7 +28,7 @@ class PUAvatarImageView: UIImageView {
         currentTask?.cancel()
         
         currentTask = Task {
-            let downloadedImage = await PokemonService.shared.downloadImage(from: url)?.byPreparingForDisplay() ?? placeHolderImage
+            let downloadedImage = await PokemonService.shared.downloadImage(from: url) ?? placeHolderImage
             DispatchQueue.main.async {
                 if !Task.isCancelled {
                     self.image = downloadedImage
