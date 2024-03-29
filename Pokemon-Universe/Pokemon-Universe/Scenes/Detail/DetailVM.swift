@@ -46,9 +46,16 @@ extension DetailVM: DetailViewModelInterface {
     private func handlePokemon(with pokemon: PokemonDetail) {
         let skills = pokemon.abilities?.compactMap { $0.ability?.name }
         let image = pokemon.sprites?.frontDefault ?? ""
+        
         let weight = pokemon.weight
         let height = pokemon.height
-        view?.updateUI(imageUrl: image, skills: skills, weight: weight, height: height)
+        
+        let stats: [(name: String, value: Int)] = pokemon.stats?.compactMap { statItem in
+            guard let name = statItem.stat?.name, let value = statItem.base_stat else { return nil }
+            return (name, value)
+        } ?? []
+        
+        view?.updateUI(imageUrl: image, skills: skills, weight: weight, height: height, stats: stats)
     }
 }
 

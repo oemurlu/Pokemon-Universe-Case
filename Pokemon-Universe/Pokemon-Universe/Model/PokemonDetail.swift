@@ -12,6 +12,7 @@ struct PokemonDetail: Decodable {
     let sprites: PokemonImage?
     let weight: Int?
     let height: Int?
+    let stats: [StatsItem]?
 }
 
 struct AbilityItem: Decodable {
@@ -29,4 +30,13 @@ struct PokemonImage: Decodable {
     enum CodingKeys: String, CodingKey {
         case frontDefault = "front_default"
     }
+}
+
+struct StatsItem: Decodable {
+    let base_stat: Int?
+    let stat: Stat?
+}
+
+struct Stat: Decodable {
+    let name: String?
 }

@@ -12,7 +12,7 @@ protocol DetailViewControllerInterface: AnyObject {
     func configureAvatarImageView()
     func configureTitle(pokemonName: String)
     func configureExpandableView()
-    func updateUI(imageUrl: String, skills: [String]?, weight: Int?, height: Int?)
+    func updateUI(imageUrl: String, skills: [String]?, weight: Int?, height: Int?, stats: [(name: String, value: Int)]?)
 }
 
 class DetailVC: UIViewController {
@@ -22,7 +22,6 @@ class DetailVC: UIViewController {
     private var expandableView: UIView!
     private var avatarImageView: PUAvatarImageView!
     private var pokemonNameLabel: PUTitleLabel!
-    private var skillsLabel: PUTitleLabel!
     
     private let padding: CGFloat = 20
     
@@ -53,9 +52,9 @@ extension DetailVC: DetailViewControllerInterface {
         view.addSubview(avatarImageView)
         
         NSLayoutConstraint.activate([
-            avatarImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: padding),
+            avatarImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: padding / 2),
             avatarImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 2 * padding),
-            avatarImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -2 * padding),
+            avatarImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -3 * padding),
             avatarImageView.widthAnchor.constraint(equalTo: avatarImageView.heightAnchor, multiplier: 1),
         ])
     }
@@ -80,8 +79,6 @@ extension DetailVC: DetailViewControllerInterface {
         view.addSubview(expandableView)
         expandableView.translatesAutoresizingMaskIntoConstraints = false
         
-        expandableView.backgroundColor = .systemRed
-        
         NSLayoutConstraint.activate([
             expandableView.topAnchor.constraint(equalTo: pokemonNameLabel.bottomAnchor, constant: padding / 2),
             expandableView.leadingAnchor.constraint(equalTo: pokemonNameLabel.leadingAnchor),
@@ -99,10 +96,10 @@ extension DetailVC: DetailViewControllerInterface {
         }
     }
     
-    func updateUI(imageUrl: String, skills: [String]?, weight: Int?, height: Int?) {
+    func updateUI(imageUrl: String, skills: [String]?, weight: Int?, height: Int?, stats: [(name: String, value: Int)]?) {
         DispatchQueue.main.async {
             self.avatarImageView.downloadImage(fromURL: imageUrl)
-            let expandVC = ExpandableVC(skills: skills, weight: weight, height: height)
+            let expandVC = ExpandableVC(skills: skills, weight: weight, height: height, stats: stats)
             self.add(childVC: expandVC, to: self.expandableView)
         }
     }
