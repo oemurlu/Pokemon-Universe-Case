@@ -12,6 +12,8 @@ protocol HomeViewControllerInterface: AnyObject {
     func configureCollectionView()
     func reloadCollectionViewOnMainThread()
     func navigateToDetail(with name: String)
+    func callLoadingView()
+    func dismissLoadingView()
 }
 
 final class HomeVC: UIViewController {
@@ -56,6 +58,18 @@ extension HomeVC: HomeViewControllerInterface {
     func navigateToDetail(with name: String) {
         let detailVC = DetailVC(name: name)
         navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
+    func callLoadingView() {
+        DispatchQueue.main.async {
+            self.view.showLoadingView()
+        }
+    }
+    
+    func dismissLoadingView() {
+        DispatchQueue.main.async {
+            self.view.hideLoadingView()
+        }
     }
 }
 

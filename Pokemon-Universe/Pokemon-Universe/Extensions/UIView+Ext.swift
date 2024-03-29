@@ -22,4 +22,21 @@ extension UIView {
     func addSubviews(_ views: UIView...) {
         for view in views { addSubview(view) }
     }
+    
+    func showLoadingView() {
+        let loadingView = UIView(frame: self.bounds)
+        loadingView.tag = 999
+        
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.color = .label
+        activityIndicator.center = loadingView.center
+        activityIndicator.startAnimating()
+        
+        loadingView.addSubview(activityIndicator)
+        self.addSubview(loadingView)
+    }
+    
+    func hideLoadingView() {
+        self.subviews.first(where: {$0.tag == 999})?.removeFromSuperview()
+    }
 }

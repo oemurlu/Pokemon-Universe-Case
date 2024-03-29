@@ -19,7 +19,6 @@ class PUAvatarImageView: UIImageView {
         configure()
     }
     
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -28,10 +27,12 @@ class PUAvatarImageView: UIImageView {
         currentTask?.cancel()
         
         currentTask = Task {
-            let downloadedImage = await PokemonService.shared.downloadImage(from: url) ?? placeHolderImage
+            showLoadingView()
+            let downloadedImage = await PokemonService.shared.downloadImage(from: url)
             DispatchQueue.main.async {
                 if !Task.isCancelled {
                     self.image = downloadedImage
+                    self.hideLoadingView()
                 }
             }
         }
@@ -39,7 +40,6 @@ class PUAvatarImageView: UIImageView {
     
     func cancelImageDownload() {
         currentTask?.cancel()
-        image = placeHolderImage
     }
 
     private func configure() {
@@ -48,6 +48,5 @@ class PUAvatarImageView: UIImageView {
         clipsToBounds = true
         tintColor = .placeholderText
         contentMode = .scaleToFill
-        image = placeHolderImage
     }
 }

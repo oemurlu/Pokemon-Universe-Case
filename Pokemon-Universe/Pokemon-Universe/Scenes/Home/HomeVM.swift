@@ -28,6 +28,7 @@ final class HomeVM {
 
 extension HomeVM: HomeViewModelInterface {
     func viewDidLoad() {
+        view?.callLoadingView()
         view?.configureVC()
         view?.configureCollectionView()
         fetchPokemons()
@@ -82,6 +83,7 @@ extension HomeVM: HomeViewModelInterface {
         }
         
         dispatchGroup.notify(queue: DispatchQueue.main) {
+            self.view?.dismissLoadingView()
             self.view?.reloadCollectionViewOnMainThread()
             self.combinedPokemonList.append(contentsOf: newCombinedPokemons)
         }
