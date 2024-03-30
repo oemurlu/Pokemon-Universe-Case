@@ -14,6 +14,5 @@ struct Pokemon: Decodable {
 
 struct PokemonResponse: Decodable {
     let next: String?
-    let previous: String?
     let results: [Pokemon]?
 }
