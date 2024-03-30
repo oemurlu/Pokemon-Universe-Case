@@ -32,6 +32,10 @@
 		B63A80262BB5809D00B23ED6 /* DetailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63A80252BB5809D00B23ED6 /* DetailVM.swift */; };
 		B63A802D2BB6C77300B23ED6 /* ExpandableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63A802C2BB6C77300B23ED6 /* ExpandableVC.swift */; };
 		B63A802F2BB70F5F00B23ED6 /* FavoriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63A802E2BB70F5F00B23ED6 /* FavoriteCell.swift */; };
+		B63A80322BB83A6200B23ED6 /* UserDefaultsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63A80312BB83A6200B23ED6 /* UserDefaultsService.swift */; };
+		B63A80342BB83C9B00B23ED6 /* PUError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63A80332BB83C9B00B23ED6 /* PUError.swift */; };
+		B63A80362BB83D3F00B23ED6 /* FavoritesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63A80352BB83D3F00B23ED6 /* FavoritesVM.swift */; };
+		B63A80382BB840C000B23ED6 /* MakeAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63A80372BB840C000B23ED6 /* MakeAlert.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +66,10 @@
 		B63A80252BB5809D00B23ED6 /* DetailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVM.swift; sourceTree = "<group>"; };
 		B63A802C2BB6C77300B23ED6 /* ExpandableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandableVC.swift; sourceTree = "<group>"; };
 		B63A802E2BB70F5F00B23ED6 /* FavoriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCell.swift; sourceTree = "<group>"; };
+		B63A80312BB83A6200B23ED6 /* UserDefaultsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsService.swift; sourceTree = "<group>"; };
+		B63A80332BB83C9B00B23ED6 /* PUError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PUError.swift; sourceTree = "<group>"; };
+		B63A80352BB83D3F00B23ED6 /* FavoritesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesVM.swift; sourceTree = "<group>"; };
+		B63A80372BB840C000B23ED6 /* MakeAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeAlert.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +102,7 @@
 		B63A7FD52BB2989000B23ED6 /* Pokemon-Universe */ = {
 			isa = PBXGroup;
 			children = (
+				B63A80302BB83A4700B23ED6 /* UserDefaults */,
 				B63A80122BB2EE0B00B23ED6 /* Extensions */,
 				B63A800A2BB2EAF700B23ED6 /* Utilities */,
 				B63A7FF62BB2A76A00B23ED6 /* Network */,
@@ -160,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				B63A7FF42BB2A2C100B23ED6 /* FavoritesVC.swift */,
+				B63A80352BB83D3F00B23ED6 /* FavoritesVM.swift */,
 			);
 			path = Favorites;
 			sourceTree = "<group>";
@@ -205,6 +215,8 @@
 			isa = PBXGroup;
 			children = (
 				B63A800B2BB2EB0900B23ED6 /* UIHelper.swift */,
+				B63A80332BB83C9B00B23ED6 /* PUError.swift */,
+				B63A80372BB840C000B23ED6 /* MakeAlert.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -258,6 +270,14 @@
 				B63A802C2BB6C77300B23ED6 /* ExpandableVC.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		B63A80302BB83A4700B23ED6 /* UserDefaults */ = {
+			isa = PBXGroup;
+			children = (
+				B63A80312BB83A6200B23ED6 /* UserDefaultsService.swift */,
+			);
+			path = UserDefaults;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -342,11 +362,15 @@
 				B63A80092BB2E99E00B23ED6 /* HomeVM.swift in Sources */,
 				B63A80112BB2EC8200B23ED6 /* PokemonCell.swift in Sources */,
 				B63A80262BB5809D00B23ED6 /* DetailVM.swift in Sources */,
+				B63A80322BB83A6200B23ED6 /* UserDefaultsService.swift in Sources */,
 				B63A7FF32BB2A2B300B23ED6 /* HomeVC.swift in Sources */,
 				B63A801E2BB3512F00B23ED6 /* CombinedPokemon.swift in Sources */,
+				B63A80382BB840C000B23ED6 /* MakeAlert.swift in Sources */,
 				B63A7FF52BB2A2C100B23ED6 /* FavoritesVC.swift in Sources */,
 				B63A80202BB3669200B23ED6 /* CGFloat+Ext.swift in Sources */,
 				B63A80012BB2BB9000B23ED6 /* PokemonService.swift in Sources */,
+				B63A80362BB83D3F00B23ED6 /* FavoritesVM.swift in Sources */,
+				B63A80342BB83C9B00B23ED6 /* PUError.swift in Sources */,
 				B63A80072BB2CD0400B23ED6 /* Pokemon.swift in Sources */,
 				B63A7FD72BB2989000B23ED6 /* AppDelegate.swift in Sources */,
 				B63A7FF92BB2A9BF00B23ED6 /* CoreService.swift in Sources */,

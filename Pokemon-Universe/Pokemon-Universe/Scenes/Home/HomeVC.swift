@@ -27,13 +27,13 @@ final class HomeVC: UIViewController {
         viewModel.view = self
         viewModel.viewDidLoad()
     }
-    
 }
 
 extension HomeVC: HomeViewControllerInterface {
     func configureVC() {
         view.backgroundColor = .systemBackground
         navigationItem.title = "Pokemons"
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     func configureCollectionView() {

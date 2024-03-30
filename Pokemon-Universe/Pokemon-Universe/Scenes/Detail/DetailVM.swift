@@ -11,12 +11,14 @@ protocol DetailViewModelInterface {
     var view: DetailViewControllerInterface? { get set }
     func viewDidLoad()
     func fetchDetails()
+    func addPokemonToFavorites()
 }
 
 class DetailVM {
     
     private let name: String
     weak var view: DetailViewControllerInterface?
+    var imageUrl: String?
     
     init(name: String) {
         self.name = name
@@ -26,6 +28,7 @@ class DetailVM {
 extension DetailVM: DetailViewModelInterface {
     func viewDidLoad() {
         view?.configureVC()
+        view?.configureFavoriteButton()
         view?.configureAvatarImageView()
         view?.configureTitle(pokemonName: self.name)
         view?.configureExpandableView()
@@ -55,7 +58,24 @@ extension DetailVM: DetailViewModelInterface {
             return (name, value)
         } ?? []
         
+        self.imageUrl = image //for userdefault
+        
         view?.updateUI(imageUrl: image, skills: skills, weight: weight, height: height, stats: stats)
+    }
+    
+    func addPokemonToFavorites() {
+        let favoritePokemon = CombinedPokemon(name: self.name, image: self.imageUrl)
+        
+        UserDefaultsService.updateWith(favorite: favoritePokemon, actionType: .add) { [weak self] error in
+            guard let self = self else { return }
+            guard let error = error else { // if the error is nil; success
+                DispatchQueue.main.async {
+                    self.view?.didReceiveError(title: "Success!", message: "You have successfully favorited this pokemon 🎉")
+                }
+                return
+            }
+            view?.didReceiveError(title: "Something went wrong", message: error.rawValue)
+        }
     }
 }
 

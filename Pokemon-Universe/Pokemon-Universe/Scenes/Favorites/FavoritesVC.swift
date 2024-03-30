@@ -11,19 +11,24 @@ protocol FavoritesViewControllerInterface: AnyObject {
     func configureVC()
     func configureCollectionView()
     func reloadCollectionViewOnMainThread()
-    func callLoadingView()
-    func dismissLoadingView()
+    func didReceiveError(title: String, message: String)
+    func deleteFavoritedItem(at indexPath: IndexPath)
 }
 
 class FavoritesVC: UIViewController {
     
     private var collectionView: UICollectionView!
+    let viewModel = FavoritesVM()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        configureVC()
-        configureCollectionView()
+        viewModel.view = self
+        viewModel.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.viewWillAppear()
     }
 }
 
@@ -38,6 +43,7 @@ extension FavoritesVC: FavoritesViewControllerInterface {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: UIHelper.createFavoritesFlowLayout())
         view.addSubview(collectionView)
         collectionView.backgroundColor = .clear
+        collectionView.showsVerticalScrollIndicator = false
         
         collectionView.register(FavoriteCell.self, forCellWithReuseIdentifier: FavoriteCell.reuseID)
         collectionView.delegate = self
@@ -52,24 +58,34 @@ extension FavoritesVC: FavoritesViewControllerInterface {
         }
     }
     
-    func callLoadingView() {
-        view.showLoadingView()
+    func didReceiveError(title: String, message: String) {
+        MakeAlert.alertMessage(title: title, message: message, style: .alert, vc: self)
     }
     
-    func dismissLoadingView() {
-        view.hideLoadingView()
+    func deleteFavoritedItem(at indexPath: IndexPath) {
+        DispatchQueue.main.async {
+            self.collectionView.deleteItems(at: [indexPath])
+        }
     }
 }
 
 extension FavoritesVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        5
+        viewModel.favorites.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteCell.reuseID, for: indexPath) as! FavoriteCell
-        cell.set(pokemon: CombinedPokemon(name: "test123", image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png"))
-//        cell.set(pokemon: CombinedPokemon(name: "test 234", image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png"))
+        cell.delegate = self
+        cell.set(pokemon: viewModel.favorites[indexPath.item])
         return cell
+    }
+}
+
+
+extension FavoritesVC: FavoriteCellDelegate {
+    func cellRequestDelete(cell: FavoriteCell) {
+        guard let indexPath = collectionView.indexPath(for: cell) else { return }
+        self.viewModel.deleteCell(indexPath: indexPath)
     }
 }

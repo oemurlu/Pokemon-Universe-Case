@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CombinedPokemon {
+struct CombinedPokemon: Codable, Equatable {
     let name: String?
     let image: String?
 }

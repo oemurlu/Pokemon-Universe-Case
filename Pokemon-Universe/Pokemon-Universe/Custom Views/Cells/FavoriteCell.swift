@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol FavoriteCellDelegate: AnyObject {
+    func cellRequestDelete(cell: FavoriteCell)
+}
+
 class FavoriteCell: UICollectionViewCell {
     
     static let reuseID = "FavoriteCell"
@@ -15,6 +19,7 @@ class FavoriteCell: UICollectionViewCell {
     let pokemonNameLabel = PUTitleLabel(fontSize: 24)
     let unfavoriteButton = UIButton(frame: .zero)
     
+    weak var delegate: FavoriteCellDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -49,11 +54,13 @@ class FavoriteCell: UICollectionViewCell {
         layer.borderWidth = 2
         layer.cornerRadius = 20
         
-        let largeConfig = UIImage.SymbolConfiguration(pointSize: 20, weight: .semibold, scale: .large)
-        let heartImage = UIImage(systemName: "heart", withConfiguration: largeConfig)
-        unfavoriteButton.setImage(heartImage, for: .normal)
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .regular, scale: .large)
+        let largeTrash = UIImage(systemName: "trash.circle", withConfiguration: largeConfig)
+        unfavoriteButton.setImage(largeTrash, for: .normal)
         unfavoriteButton.tintColor = .systemRed
         unfavoriteButton.translatesAutoresizingMaskIntoConstraints = false
+        unfavoriteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        
         
         NSLayoutConstraint.activate([
             avatarImageView.topAnchor.constraint(equalTo: topAnchor, constant: 2 * padding),
@@ -70,5 +77,9 @@ class FavoriteCell: UICollectionViewCell {
             unfavoriteButton.widthAnchor.constraint(equalToConstant: 30),
             unfavoriteButton.heightAnchor.constraint(equalToConstant: 30),
         ])
+    }
+    
+    @objc func deleteButtonTapped() {
+        delegate?.cellRequestDelete(cell: self)
     }
 }

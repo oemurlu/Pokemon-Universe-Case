@@ -11,7 +11,7 @@ class PUAvatarImageView: UIImageView {
     
     private var currentTask: Task<Void, Never>?
     let cache = PokemonService.shared.cache
-    let placeHolderImage = UIImage(systemName: "arrow.counterclockwise")
+    let placeHolderImage = UIImage(systemName: "person.crop.circle.badge.exclamationmark")
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,8 +31,10 @@ class PUAvatarImageView: UIImageView {
             let downloadedImage = await PokemonService.shared.downloadImage(from: url)
             DispatchQueue.main.async {
                 if !Task.isCancelled {
-                    self.image = downloadedImage
                     self.hideLoadingView()
+                    self.image = downloadedImage
+                } else {
+                    self.image = self.placeHolderImage
                 }
             }
         }

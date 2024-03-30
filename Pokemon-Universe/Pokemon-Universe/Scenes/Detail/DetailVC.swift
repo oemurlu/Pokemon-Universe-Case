@@ -9,10 +9,12 @@ import UIKit
 
 protocol DetailViewControllerInterface: AnyObject {
     func configureVC()
+    func configureFavoriteButton()
     func configureAvatarImageView()
     func configureTitle(pokemonName: String)
     func configureExpandableView()
     func updateUI(imageUrl: String, skills: [String]?, weight: Int?, height: Int?, stats: [(name: String, value: Int)]?)
+    func didReceiveError(title: String, message: String)
 }
 
 class DetailVC: UIViewController {
@@ -22,6 +24,7 @@ class DetailVC: UIViewController {
     private var expandableView: UIView!
     private var avatarImageView: PUAvatarImageView!
     private var pokemonNameLabel: PUTitleLabel!
+    private var favoriteButton: UIButton!
     
     private let padding: CGFloat = 20
     
@@ -45,6 +48,15 @@ class DetailVC: UIViewController {
 extension DetailVC: DetailViewControllerInterface {
     func configureVC() {
         view.backgroundColor = .systemBackground
+    }
+    
+    func configureFavoriteButton() {
+        let favoriteButton = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(addButtonTapped))
+        navigationItem.rightBarButtonItem = favoriteButton
+    }
+    
+    @objc func addButtonTapped() {
+        viewModel.addPokemonToFavorites()
     }
     
     func configureAvatarImageView() {
@@ -102,5 +114,9 @@ extension DetailVC: DetailViewControllerInterface {
             let expandVC = ExpandableVC(skills: skills, weight: weight, height: height, stats: stats)
             self.add(childVC: expandVC, to: self.expandableView)
         }
+    }
+    
+    func didReceiveError(title: String, message: String) {
+        MakeAlert.alertMessage(title: title, message: message, style: .alert, vc: self)
     }
 }
