@@ -17,7 +17,7 @@ protocol DetailViewControllerInterface: AnyObject {
     func didReceiveError(title: String, message: String)
 }
 
-class DetailVC: UIViewController {
+final class DetailVC: UIViewController {
     
     var viewModel: DetailVM!
     
@@ -30,7 +30,8 @@ class DetailVC: UIViewController {
     
     init(name: String) {
         super.init(nibName: nil, bundle: nil)
-        viewModel = DetailVM(name: name)
+        
+        self.viewModel = DetailVM(name: name)
     }
     
     required init?(coder: NSCoder) {

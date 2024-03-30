@@ -7,7 +7,7 @@
 
 import Foundation
 
-class CoreService {
+final class CoreService {
     static let shared = CoreService()
 
     private init() {}

@@ -15,11 +15,21 @@ protocol FavoritesViewControllerInterface: AnyObject {
     func deleteFavoritedItem(at indexPath: IndexPath)
 }
 
-class FavoritesVC: UIViewController {
+final class FavoritesVC: UIViewController {
     
     private var collectionView: UICollectionView!
-    let viewModel = FavoritesVM()
+    private var viewModel: FavoritesVM!
 
+    init(viewModel: FavoritesVM) {
+        super.init(nibName: nil, bundle: nil)
+        
+        self.viewModel = viewModel
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -81,7 +91,6 @@ extension FavoritesVC: UICollectionViewDelegate, UICollectionViewDataSource {
         return cell
     }
 }
-
 
 extension FavoritesVC: FavoriteCellDelegate {
     func cellRequestDelete(cell: FavoriteCell) {

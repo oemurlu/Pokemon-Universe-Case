@@ -42,7 +42,6 @@ enum UserDefaultsService {
         }
     }
     
-    
     static func retrieveFavorites(completion: @escaping (Result<[CombinedPokemon], PUError>) -> ()) {
         guard let favoritesData = defaults.object(forKey: Keys.favorites) as? Data else {
             completion(.success([]))
@@ -57,7 +56,6 @@ enum UserDefaultsService {
             completion(.failure(.unableToFavorite))
         }
     }
-    
     
     static private func save(favorites: [CombinedPokemon]) -> PUError? {
         do {

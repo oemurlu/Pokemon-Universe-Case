@@ -23,25 +23,27 @@ final class HomeVM {
     private var offset = 0 // for paging
     private var limit = 15 // item count per request
     private var isLoading = false
-    
 }
 
 extension HomeVM: HomeViewModelInterface {
     func viewDidLoad() {
-        view?.callLoadingView()
         view?.configureVC()
         view?.configureCollectionView()
         fetchPokemons()
     }
     
     func fetchPokemons() {
+        view?.callLoadingView()
         // fetch pokemons if exists
         guard canLoadMorePages, !isLoading else { return } // finish if it's already loading or there are no more pages
         isLoading = true // fetch islemini baslattik.
         
         Task {
             // defer block is executed whether the code is successful or not
-            defer { self.isLoading = false }
+            defer { 
+                self.isLoading = false
+                self.view?.dismissLoadingView()
+            }
             do {
                 let pokemonResponse = try await PokemonService.shared.fetchPokemons(endPoint: .getPokemons(offset: offset, limit: limit))
                 await handlePokemonResponse(with: pokemonResponse)

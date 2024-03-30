@@ -14,7 +14,7 @@ protocol DetailViewModelInterface {
     func addPokemonToFavorites()
 }
 
-class DetailVM {
+final class DetailVM {
     
     private let name: String
     weak var view: DetailViewControllerInterface?

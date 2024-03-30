@@ -23,7 +23,7 @@ extension UIView {
         for view in views { addSubview(view) }
     }
     
-    func showLoadingView() {
+    func showLoadingViewCenter() {
         let loadingView = UIView(frame: self.bounds)
         loadingView.tag = 999
         
@@ -36,7 +36,39 @@ extension UIView {
         self.addSubview(loadingView)
     }
     
-    func hideLoadingView() {
+    func hideLoadingViewCenter() {
         self.subviews.first(where: {$0.tag == 999})?.removeFromSuperview()
+    }
+    
+    func showLoadingViewForNewPokemonsLoading() {
+        guard self.viewWithTag(995) == nil else { return } // Eğer zaten bir loading view varsa, yeni bir tane eklenmemesi için kontrol
+
+        let loadingView = UIView()
+        loadingView.tag = 995
+        loadingView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(loadingView)
+
+        NSLayoutConstraint.activate([
+            loadingView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            loadingView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            loadingView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            loadingView.heightAnchor.constraint(equalToConstant: 60)
+        ])
+
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.color = .label
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        loadingView.addSubview(activityIndicator)
+
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: loadingView.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: loadingView.centerYAnchor)
+        ])
+
+        activityIndicator.startAnimating()
+    }
+    
+    func hideLoadingViewForNewPokemonsDidLoad() {
+        self.subviews.first(where: {$0.tag == 995})?.removeFromSuperview()
     }
 }

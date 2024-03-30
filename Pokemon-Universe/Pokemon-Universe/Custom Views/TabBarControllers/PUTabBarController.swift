@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PUTabBarController: UITabBarController {
+final class PUTabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,24 +17,23 @@ class PUTabBarController: UITabBarController {
         configureTabBarAppearance()
     }
     
-    
     func createHomeNC() -> UINavigationController {
-        let favoritesVC = HomeVC()
+        let homeVM = HomeVM()
+        let favoritesVC = HomeVC(viewModel: homeVM)
         favoritesVC.title = "Home"
         favoritesVC.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house.fill"), tag: 0)
         
         return UINavigationController(rootViewController: favoritesVC)
     }
     
-    
     func createFavoritesNC() -> UINavigationController {
-        let favoritesVC = FavoritesVC()
+        let favoritesVM = FavoritesVM()
+        let favoritesVC = FavoritesVC(viewModel: favoritesVM)
         favoritesVC.title = "Favorites"
         favoritesVC.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
         
         return UINavigationController(rootViewController: favoritesVC)
     }
-    
     
     func configureTabBarAppearance() {
         let appearance = UITabBarAppearance()

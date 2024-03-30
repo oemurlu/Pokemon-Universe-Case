@@ -18,7 +18,6 @@ enum PokemonEndpoint {
         case .getPokemonByName(name: let name):
             return "\(Path.pokemons.rawValue)/\(name)"
         }
-        
     }
 }
 

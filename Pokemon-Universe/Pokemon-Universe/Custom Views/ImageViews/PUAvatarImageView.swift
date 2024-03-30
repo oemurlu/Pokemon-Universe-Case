@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PUAvatarImageView: UIImageView {
+final class PUAvatarImageView: UIImageView {
     
     private var currentTask: Task<Void, Never>?
     let cache = PokemonService.shared.cache
@@ -27,11 +27,11 @@ class PUAvatarImageView: UIImageView {
         currentTask?.cancel()
         
         currentTask = Task {
-            showLoadingView()
+            showLoadingViewCenter()
             let downloadedImage = await PokemonService.shared.downloadImage(from: url)
             DispatchQueue.main.async {
                 if !Task.isCancelled {
-                    self.hideLoadingView()
+                    self.hideLoadingViewCenter()
                     self.image = downloadedImage
                 } else {
                     self.image = self.placeHolderImage

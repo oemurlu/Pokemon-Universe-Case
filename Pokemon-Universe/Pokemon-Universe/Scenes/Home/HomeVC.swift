@@ -19,7 +19,16 @@ protocol HomeViewControllerInterface: AnyObject {
 final class HomeVC: UIViewController {
     
     private var collectionView: UICollectionView!
-    let viewModel = HomeVM()
+    private var viewModel: HomeVM!
+    
+    init(viewModel: HomeVM) {
+        super.init(nibName: nil, bundle: nil)
+        self.viewModel = HomeVM()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +54,6 @@ extension HomeVC: HomeViewControllerInterface {
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        
         collectionView.pinToEdgesOfSafeArea(of: view)
     }
     
@@ -62,13 +70,13 @@ extension HomeVC: HomeViewControllerInterface {
     
     func callLoadingView() {
         DispatchQueue.main.async {
-            self.view.showLoadingView()
+            self.view.showLoadingViewForNewPokemonsLoading()
         }
     }
     
     func dismissLoadingView() {
         DispatchQueue.main.async {
-            self.view.hideLoadingView()
+            self.view.hideLoadingViewForNewPokemonsDidLoad()
         }
     }
 }

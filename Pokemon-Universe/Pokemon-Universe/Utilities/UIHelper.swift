@@ -37,5 +37,3 @@ enum UIHelper {
         return layout
     }
 }
-
-

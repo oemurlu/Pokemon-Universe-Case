@@ -23,13 +23,11 @@ final class PokemonCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         
         avatarImageView.cancelImageDownload()
     }
-    
     
     func set(pokemon: CombinedPokemon) {
         DispatchQueue.main.async {
@@ -37,7 +35,6 @@ final class PokemonCell: UICollectionViewCell {
             self.pokemonNameLabel.text = pokemon.name?.capitalized
         }
     }
-    
     
     private func configure() {
         addSubviews(avatarImageView, pokemonNameLabel)

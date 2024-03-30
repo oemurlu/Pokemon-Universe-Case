@@ -11,7 +11,7 @@ protocol FavoriteCellDelegate: AnyObject {
     func cellRequestDelete(cell: FavoriteCell)
 }
 
-class FavoriteCell: UICollectionViewCell {
+final class FavoriteCell: UICollectionViewCell {
     
     static let reuseID = "FavoriteCell"
     
